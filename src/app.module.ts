@@ -5,6 +5,7 @@ import * as Joi from 'joi';
 import validationSchema from './config/configs.schema'
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ProductModule } from './product/product.module';
 import mongoConfig from './config/mongo.config'
 import rabbitmqConfig from './config/rabbitmq.config';
 
@@ -23,6 +24,7 @@ import rabbitmqConfig from './config/rabbitmq.config';
       }),
       inject: [ConfigService]
     }),
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

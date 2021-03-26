@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Result } from 'src/shared/main.helper';
 import { CreateProductDto } from './models/product.dto';
 import { ProductService } from './product.service';
 
@@ -8,8 +9,8 @@ export class ProductController {
     constructor(private readonly productService: ProductService){}
 
     @Post()
-    createProduct(@Body() createProductDto: CreateProductDto){
-        this.productService.createProduct(createProductDto)
+    createProduct(@Body() createProductDto: CreateProductDto): Promise<Result>{
+        return this.productService.createProduct(createProductDto)
     }
 
     @Get()

@@ -2,6 +2,7 @@ import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -20,6 +21,15 @@ async function bootstrap() {
       }, 
     }
   })
+
+  const config = new DocumentBuilder()
+    .setTitle('Products')
+    .setDescription('oranoos Products')
+    .setVersion('0.1')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('doc', app, document);
 
   app.startAllMicroservices(()=>{
     Logger.debug("Microservice is listening...")

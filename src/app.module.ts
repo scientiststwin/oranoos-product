@@ -6,6 +6,7 @@ import validationSchema from './config/configs.schema'
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import mongoConfig from './config/mongo.config'
+import rabbitmqConfig from './config/rabbitmq.config';
 
 @Module({
   imports: [
@@ -13,12 +14,12 @@ import mongoConfig from './config/mongo.config'
       envFilePath: '.env',
       validationSchema: Joi.object(validationSchema),
       isGlobal: true,
-      load: [mongoConfig]
+      load: [mongoConfig, rabbitmqConfig]
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({
-        uri: `mongodb://${config.get('mongo.host')}/${config.get('mongo.name')}`,
+        uri: `mongodb://${config.get<string>('mongo.host')}/${config.get<string>('mongo.name')}`,
       }),
       inject: [ConfigService]
     }),

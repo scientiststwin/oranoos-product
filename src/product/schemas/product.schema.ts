@@ -23,6 +23,9 @@ export class Product{
     @Prop({ required: true })
     description: string
 
+    @Prop({ required: true })
+    owner: string
+
     @Prop({ type: Property })
     property: Property[]
 

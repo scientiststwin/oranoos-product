@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
 import mongoConfig from './config/mongo.config'
 import rabbitmqConfig from './config/rabbitmq.config';
+import { JwtStrategy } from './shared/auth/jwt.strategy';
 
 @Module({
   imports: [
@@ -27,6 +28,6 @@ import rabbitmqConfig from './config/rabbitmq.config';
     ProductModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtStrategy],
 })
 export class AppModule {}

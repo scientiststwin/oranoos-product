@@ -21,13 +21,13 @@ export class ProductService {
         
     }
 
-    async getAllProduct(): Promise<Result>{
+    async getAllProduct(page: number, count: number): Promise<Result>{       
         try{
-            const result = this.ProductModel.find().exec()
+            const result = await this.ProductModel.find().sort({ created_at: 1 }).skip(+page * +count).limit(+count)          
             return new Result(result)
 
-        }catch(err){
-            throw new ResultError(err?.data)
+        }catch(err){            
+            throw new ResultError(err?.message)
         }
     }
 }

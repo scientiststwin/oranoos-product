@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Result } from 'src/shared/main.helper';
 import { CreateProductDto } from './models/product.dto';
 import { ProductService } from './product.service';
@@ -17,4 +18,16 @@ export class ProductController {
     getAllProduct(@Query('count') count: number, @Query('page') page: number){
         return this.productService.getAllProduct(page,count)
     }
+
+    @MessagePattern('product-info')
+    productInformation(@Payload() data){
+        return this.productService.productInformation(data.id)
+    }
+
+    @MessagePattern('products-info')
+    productsInformation(@Payload() data){
+        return this.productService.productsInformation(data.ids)
+    }
+
+
 }

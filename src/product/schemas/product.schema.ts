@@ -1,4 +1,5 @@
 import { Prop, SchemaFactory, Schema, raw } from "@nestjs/mongoose";
+import { date } from "joi";
 import { Date, Document } from "mongoose";
 
 class Property{
@@ -25,10 +26,10 @@ export class Product{
     @Prop({ type: Property })
     property: Property[]
 
-    @Prop({type: Date, default: new Date()})
+    @Prop({type: Date, default: Date.now})
     created_at: Date
 
-    @Prop({type: Date, default: new Date()})
+    @Prop({type: Date, default: Date.now })
     updated_at: Date
 }
 

@@ -1,3 +1,4 @@
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/shared/auth/jwt.guard';
@@ -24,4 +25,16 @@ export class ProductController {
     getAllProduct(@Query('count') count: number, @Query('page') page: number){
         return this.productService.getAllProduct(page,count)
     }
+
+    @MessagePattern('product-info')
+    productInformation(@Payload() data){
+        return this.productService.productInformation(data.id)
+    }
+
+    @MessagePattern('products-info')
+    productsInformation(@Payload() data){
+        return this.productService.productsInformation(data.ids)
+    }
+
+
 }

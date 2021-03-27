@@ -1,10 +1,19 @@
-import { Prop, raw, SchemaFactory } from "@nestjs/mongoose";
-import { string } from "joi";
-import { Document } from "mongoose";
+import { Prop, SchemaFactory, Schema, raw } from "@nestjs/mongoose";
+import { date } from "joi";
+import { Date, Document } from "mongoose";
 
-// export type ProductDocument = Product & Document;
+class Property{
+    @Prop()
+    key: string
+    
+    @Prop()
+    value: string
+}
 
-export class Product extends Document{
+
+export type ProductDocument = Product & Document;
+@Schema()
+export class Product{
     @Prop({ required: true })
     name: string;
 
@@ -14,11 +23,14 @@ export class Product extends Document{
     @Prop({ required: true })
     description: string
 
-    // @Prop([raw({
-    //     key: {type: string},
-    //     value: {type: string}
-    // })])
-    // property: Record<string,any>
+    @Prop({ type: Property })
+    property: Property[]
+
+    @Prop({type: Date, default: Date.now})
+    created_at: Date
+
+    @Prop({type: Date, default: Date.now })
+    updated_at: Date
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
